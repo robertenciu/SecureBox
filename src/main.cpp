@@ -88,14 +88,13 @@ void deleteUID(byte *uid) {
 }
 
 void setup() {
-  // Adaugă un mic delay la inițializare pentru stabilitate
   delay(100);
   Serial.begin(9600);
   SPI.begin();
   rfid.PCD_Init();
 
   DDRC |= (1 << DDC0);         // A0 OUTPUT
-  PORTC |= (1 << PORTC0);      // HIGH - yala dezactivată
+  PORTC |= (1 << PORTC0);      // HIGH - yala dezactivata
 
   DDRD &= ~(1 << DDD2);        // PD2 INPUT
   PORTD |= (1 << PORTD2);      // Pull-up ON
@@ -105,22 +104,20 @@ void setup() {
   afiseazaModPeLCD();
   delay(2000);
 
-  initUIDs(); // Inițializează vectorul cu 0xFF
+  initUIDs();
 }
 
 void loop() {
-  // Schimbare mod doar la apăsare și eliberare buton
+  // Schimbare mod doar la apasare si eliberare buton
   if (!(PIND & (1 << PIND2))) {
     if (millis() - lastButtonPress > debounceDelay) {
       mode = (mode + 1) % 3;
       afiseazaModPeLCD();
       lastButtonPress = millis();
-      while (!(PIND & (1 << PIND2))); // Așteaptă eliberarea
-      delay(50);
     }
   }
 
-  // Afișează mod dacă s-a schimbat (prevenim update-uri dese pe LCD)
+  // Afiseaza mod daca s-a schimbat (prevenim update-uri dese pe LCD)
   if (mode != lastMode) {
     afiseazaModPeLCD();
     lastMode = mode;
@@ -128,7 +125,7 @@ void loop() {
 
   if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) return;
 
-  // Verifică dimensiunea UID
+  // Verifica dimensiunea UID
   if (rfid.uid.size != UID_LENGTH) {
     lcd.clear();
     lcd.print("UID invalid!");
@@ -146,6 +143,7 @@ void loop() {
   }
   uidStr[2 * UID_LENGTH] = '\0';
 
+  // Afisare UID
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("UID:");
@@ -194,7 +192,7 @@ void loop() {
   }
   afiseazaModPeLCD();
   delay(2000);
-  // Oprește citirea cardului ca să nu repete accidental
+  
   rfid.PICC_HaltA();
   rfid.PCD_StopCrypto1();
 }
