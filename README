@@ -1,0 +1,3 @@
+Proiectul "Smart Seif" consta in realizarea unui seif electronic inteligent, care permite accesul doar utilizatorilor autorizati prin intermediul unui card RFID.
+Sistemul este controlat de un microcontroler Arduino Nano, care gestioneaza un modul RFID RC522 pentru identificare,
+un mecanism de inchidere electronica (yala) activat printr-un releu, si un afisaj LCD I2C pentru feedback vizual. 
