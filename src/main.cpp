@@ -110,6 +110,7 @@ void loop() {
   if (!(PIND & (1 << PIND2))) {
     mode = (mode + 1) % 3;
     afiseazaModPeLCD();
+    delay(500);
   }
 
   // Afiseaza mod daca s-a schimbat (prevenim update-uri dese pe LCD)
