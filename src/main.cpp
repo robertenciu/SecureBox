@@ -19,9 +19,7 @@ byte storedUIDs[MAX_UIDS][UID_LENGTH];
 int savedUIDCount = 0;
 
 byte mode = 0; // 0 = citire, 1 = scriere, 2 = stergere
-byte lastMode = 255;
-unsigned long lastButtonPress = 0;
-const unsigned long debounceDelay = 200;
+byte lastMode = 0;
 
 // Pentru a preveni update-uri inutile ale LCD-ului
 void afiseazaModPeLCD() {
@@ -110,11 +108,8 @@ void setup() {
 void loop() {
   // Schimbare mod doar la apasare si eliberare buton
   if (!(PIND & (1 << PIND2))) {
-    if (millis() - lastButtonPress > debounceDelay) {
-      mode = (mode + 1) % 3;
-      afiseazaModPeLCD();
-      lastButtonPress = millis();
-    }
+    mode = (mode + 1) % 3;
+    afiseazaModPeLCD();
   }
 
   // Afiseaza mod daca s-a schimbat (prevenim update-uri dese pe LCD)
