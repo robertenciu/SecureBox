@@ -180,9 +180,9 @@ void loop() {
     if (isUIDAuthorized(uid)) {
       lcd.clear();
       lcd.print("Acces permis!");
-      digitalWrite(RELAY_PIN, LOW);  // deschide yala
+      PORTC &= ~(1 << PORTC0);;  // deschide yala
       delay(3000);
-      digitalWrite(RELAY_PIN, HIGH);
+      PORTC |= (1 << PORTC0);;
       delay(1000);
     } else {
       lcd.clear();
